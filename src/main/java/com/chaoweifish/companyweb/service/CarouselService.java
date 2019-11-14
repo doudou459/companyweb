@@ -12,5 +12,6 @@ public interface CarouselService {
     List<Carousel_img>getCarousel();
     String deletCarousel(long ID);
     String saveCarousel(JSONArray jsonArray);
+    String updateCarousel(Carousel_img carousel_img);
 
 }

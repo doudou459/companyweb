@@ -1,6 +1,8 @@
 package com.chaoweifish.companyweb.controller.api;
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.chaoweifish.companyweb.pojo.Carousel_img;
 import com.chaoweifish.companyweb.service.CarouselService;
 import com.chaoweifish.companyweb.service.Index_imgService;
@@ -24,16 +26,12 @@ public class ManageController {
     private CarouselService carouselService;
     @Autowired
     private Index_imgService index_imgService;
-    @RequestMapping("/addCarouselImg")
+    @RequestMapping("/saveCarouselImg")
     public HashMap<String,Object> addCarouselImg(HttpServletRequest request, HttpServletResponse response) {
         HashMap map =new HashMap<String,Object>();
         map.put("loginTime",request.getAttribute("newLoginTime"));
-        Carousel_img carousel_img=new Carousel_img();
-        carousel_img.setID(Long.parseLong(request.getParameter("ID")));
-        carousel_img.setShowType(request.getParameter("showType"));
-        carousel_img.setTitle(request.getParameter("title"));
-
-        String result = carouselService.addCarousel(carousel_img);
+        JSONArray jsonArray = JSON.parseArray(request.getParameter("carouselData"));
+        String result = carouselService.saveCarousel(jsonArray);
         map.put("result",result);
         return map;
     }

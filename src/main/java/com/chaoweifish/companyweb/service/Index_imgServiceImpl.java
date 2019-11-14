@@ -1,5 +1,6 @@
 package com.chaoweifish.companyweb.service;
 
+import com.alibaba.fastjson.JSONArray;
 import com.chaoweifish.companyweb.mapper.Index_imgMapper;
 import com.chaoweifish.companyweb.pojo.Index_img;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,15 @@ public class Index_imgServiceImpl implements Index_imgService {
             result="success";
         }
         return result;
+    }
+
+    @Override
+    public String saveIndex_img(JSONArray jsonArray) {
+        return null;
+    }
+
+    @Override
+    public String updateIndex_img(Index_img index_img) {
+        return null;
     }
 }

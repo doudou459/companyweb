@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
 import java.util.HashMap;
 /*
 * 全局异常捕获器
@@ -18,5 +19,9 @@ public class controllerAdvice {
         map.put("code",authenticationFail.getCode());
         map.put("msg",authenticationFail.getMsg());
         return map;
+    }
+    @ExceptionHandler(value = IOException.class)
+    public String IOExceptionHandle(IOException IOException){
+        return IOException.getMessage();
     }
 }
