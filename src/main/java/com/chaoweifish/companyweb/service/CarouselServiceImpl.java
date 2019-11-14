@@ -8,12 +8,7 @@ import com.chaoweifish.companyweb.pojo.Carousel_img;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import sun.misc.BASE64Decoder;
-
-import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 @Service
@@ -22,6 +17,8 @@ public class CarouselServiceImpl implements CarouselService {
     private Carousel_imgMapper carousel_imgMapper;
    @Autowired
    private Contants contants;
+   @Autowired
+   private StoreBase64Img storeBase64Img;
 
     /**
      * 保存Carousel数据
@@ -101,7 +98,7 @@ public class CarouselServiceImpl implements CarouselService {
  *根据json生成Carousel_img对象
  * @param carousel Carousel_img的json形式
  *
- * carousel的url字段为base64码的情况下，调用storeBase64Img方法将图片储存
+ * carousel的url字段为base64码的情况下，调用storeBase64Img将图片储存
  * 图片文件储存完成后 返回图片的储存名称，并设置Carousel_img的url为该文件储存名称
  * 图片储存时，根据base64码头部的文件类型，分别以.png  或.jpg储存图片
  *
@@ -123,62 +120,13 @@ public class CarouselServiceImpl implements CarouselService {
               }else{
                   carousel_img.setUrl(carousel.getString("ID")+".png");
               }
-              this.storeBase64Img(carousel.getString("url"),carousel_img.getUrl(),contants.getPICTURE_PATH());
+             storeBase64Img.storeBase64Img(carousel.getString("url"),carousel_img.getUrl(),contants.getPICTURE_PATH());
           }else{
               carousel_img.setUrl(carousel.getString("url"));
           }
         return carousel_img;
       }
 
-
-
-    /**
-     * base64转文件并输出到指定目录
-     * @param base64Str  图片的base64码
-     * @param fileName   图片名称
-     * @param filePath   图片保存地址
-     * @return
-     */
-    private void storeBase64Img(String base64Str,String fileName,String filePath){
-        File file = null;
-        //创建文件目录
-        File  dir=new File(filePath);
-        if (!dir.exists() && !dir.isDirectory()) {
-            dir.mkdirs();
-        }
-        BufferedOutputStream bos = null;
-        FileOutputStream fos = null;
-
-        byte[] b = null;
-        BASE64Decoder decoder = new BASE64Decoder();
-        try {
-            b = decoder.decodeBuffer(base64Str);
-           // window
-            file=new File(filePath+File.separator+fileName);
-           //linux
-           //file=new File(filePath+"/"+fileName);
-            fos = new FileOutputStream(file);
-            bos = new BufferedOutputStream(fos);
-            bos.write(b);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            if (bos != null) {
-                try {
-                    bos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
 
 
 

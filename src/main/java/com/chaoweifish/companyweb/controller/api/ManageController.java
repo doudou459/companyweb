@@ -22,12 +22,15 @@ import java.util.HashMap;
 */
 @RestController
 public class ManageController {
+
     @Autowired
     private CarouselService carouselService;
+
     @Autowired
     private Index_imgService index_imgService;
+
     @RequestMapping("/saveCarouselImg")
-    public HashMap<String,Object> addCarouselImg(HttpServletRequest request, HttpServletResponse response) {
+    public HashMap<String,Object> saveCarouselImg(HttpServletRequest request, HttpServletResponse response) {
         HashMap map =new HashMap<String,Object>();
         map.put("loginTime",request.getAttribute("newLoginTime"));
         JSONArray jsonArray = JSON.parseArray(request.getParameter("carouselData"));
@@ -36,28 +39,13 @@ public class ManageController {
         return map;
     }
 
-
-    public HashMap updateCarouselImg(HttpServletRequest request, HttpServletResponse response) {
-        return null;
-    }
-
-
-    public HashMap deleteCarouselImg(HttpServletRequest request, HttpServletResponse response) {
-        return null;
-    }
-
-
-    public HashMap addIndexImg(HttpServletRequest request, HttpServletResponse response) {
-        return null;
-    }
-
-
-    public HashMap updateIndexImg(HttpServletRequest request, HttpServletResponse response) {
-        return null;
-    }
-
-
-    public HashMap deleteIndexImg(HttpServletRequest request, HttpServletResponse response) {
-        return null;
+    @RequestMapping("/saveIndexImg")
+    public HashMap<String,Object> saveIndexImg(HttpServletRequest request, HttpServletResponse response) {
+        HashMap map =new HashMap<String,Object>();
+        map.put("loginTime",request.getAttribute("newLoginTime"));
+        JSONArray jsonArray = JSON.parseArray(request.getParameter("indexImgData"));
+        String result = index_imgService.saveIndex_img(jsonArray);
+        map.put("result",result);
+        return map;
     }
 }
