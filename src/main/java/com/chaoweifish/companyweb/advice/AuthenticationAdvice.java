@@ -9,8 +9,8 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
+
 /*
 * 该类为AOP通知类
 * 使用前置通知对前端请求进行权限验证
@@ -29,14 +29,14 @@ public class AuthenticationAdvice {
     }
     @Before(value = "myPiont()")
     private Object doAuthentication(JoinPoint joinPoint){
-        //获取目标方法中的前端请求  HttpServletRequest
-        HttpServletRequest request= (HttpServletRequest)joinPoint.getArgs()[0];
+        //获取目标方法中的前端传过来的json参数
+        Map<String,Object> jsonMap= ( Map<String,Object>)joinPoint.getArgs()[0];
         //获取前端传过来的loginID 和loginTime,如果未null 则抛出异常:权限不足
-        if(request.getParameter("loginID")==null||request.getParameter("loginTime")==null){
+        if(jsonMap.get("loginID")==null||jsonMap.get("loginTime")==null){
             throw new AuthenticationFail("Insufficient Access","权限不足");
         }
         //通过loginID 获取admin信息，如未找到admin 则抛出异常:权限不足
-        Admin admin = adminLoginMapper.getAdminByLoginID(request.getParameter("loginID"));
+        Admin admin = adminLoginMapper.getAdminByLoginID((String)jsonMap.get("loginID"));
         if(admin==null){
             throw new AuthenticationFail("Insufficient Access","权限不足");
         }
@@ -45,13 +45,13 @@ public class AuthenticationAdvice {
         如对比一致则使用随机函数随机控制修改  admin的loginTime值
         无论是否修改loginTime的值，都将loginTime（新值或旧值）作为newLoginTime传递给目标方法
         */
-        if(String.valueOf(admin.getLoginTime()).equals(request.getParameter("loginTime"))){
+        if(String.valueOf(admin.getLoginTime()).equals((String)jsonMap.get("loginTime"))){
             if(Math.random()*10+1>6){
                 long newLoginTime = System.currentTimeMillis();
-                adminLoginMapper.updateLoginTime(request.getParameter("loginID"),newLoginTime);
-                request.setAttribute("newLoginTime",newLoginTime);
+                adminLoginMapper.updateLoginTime((String)jsonMap.get("loginID"),newLoginTime);
+                jsonMap.put("newLoginTime",newLoginTime);
             }else{
-                request.setAttribute("newLoginTime",request.getParameter("loginTime"));
+                jsonMap.put("newLoginTime",jsonMap.get("loginTime"));
             }
         }else{
             throw new AuthenticationFail("Insufficient Access","权限不足");

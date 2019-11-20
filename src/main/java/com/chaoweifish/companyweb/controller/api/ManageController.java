@@ -1,18 +1,17 @@
 package com.chaoweifish.companyweb.controller.api;
 
 
-import com.alibaba.fastjson.JSON;
+
 import com.alibaba.fastjson.JSONArray;
-import com.chaoweifish.companyweb.pojo.Carousel_img;
 import com.chaoweifish.companyweb.service.CarouselService;
 import com.chaoweifish.companyweb.service.Index_imgService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.Map;
+
 /*
 该类下所有方法均通过AOP进行权限验证
 通知类:com.chaoweifish.companyweb.advice.AuthenticationAdvice
@@ -30,20 +29,20 @@ public class ManageController {
     private Index_imgService index_imgService;
 
     @RequestMapping("/saveCarouselImg")
-    public HashMap<String,Object> saveCarouselImg(HttpServletRequest request, HttpServletResponse response) {
+    public HashMap<String,Object> saveCarouselImg(@RequestBody Map<String,Object> jsonMap) {
         HashMap map =new HashMap<String,Object>();
-        map.put("loginTime",request.getAttribute("newLoginTime"));
-        JSONArray jsonArray = JSON.parseArray(request.getParameter("carouselData"));
+        map.put("loginTime",jsonMap.get("newLoginTime"));
+        JSONArray jsonArray = (JSONArray)jsonMap.get("carouselData");
         String result = carouselService.saveCarousel(jsonArray);
         map.put("result",result);
         return map;
     }
 
     @RequestMapping("/saveIndexImg")
-    public HashMap<String,Object> saveIndexImg(HttpServletRequest request, HttpServletResponse response) {
+    public HashMap<String,Object> saveIndexImg(@RequestBody Map<String,Object> jsonMap) {
         HashMap map =new HashMap<String,Object>();
-        map.put("loginTime",request.getAttribute("newLoginTime"));
-        JSONArray jsonArray = JSON.parseArray(request.getParameter("indexImgData"));
+        map.put("loginTime",jsonMap.get("newLoginTime"));
+        JSONArray jsonArray = (JSONArray)jsonMap.get("indexImgData");
         String result = index_imgService.saveIndex_img(jsonArray);
         map.put("result",result);
         return map;
