@@ -23,7 +23,7 @@ import java.util.Map;
 public class AuthenticationAdvice {
     @Autowired
     private AdminLoginMapper adminLoginMapper;
-    @Pointcut(value ="execution(* com.chaoweifish.companyweb.controller.api.*.*(..))")
+    @Pointcut(value ="execution(* com.chaoweifish.companyweb.controller.adminAPI.*.*(..))")
     private void myPiont(){
 
     }

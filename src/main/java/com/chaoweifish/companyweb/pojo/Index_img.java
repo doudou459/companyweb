@@ -3,7 +3,7 @@ package com.chaoweifish.companyweb.pojo;
 public class Index_img {
     @Override
     public String toString() {
-        return "index_img{" +
+        return "{" +
                 "ID=" + ID +
                 ", title='" + title + '\'' +
                 ", url='" + url + '\'' +

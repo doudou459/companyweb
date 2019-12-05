@@ -3,7 +3,7 @@ package com.chaoweifish.companyweb.pojo;
 public class Carousel_img {
     @Override
     public String toString() {
-        return "carousel_img{" +
+        return "{" +
                 "ID=" + ID +
                 ", showType='" + showType + '\'' +
                 ", title='" + title + '\'' +

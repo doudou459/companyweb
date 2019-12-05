@@ -1,4 +1,4 @@
-package com.chaoweifish.companyweb.controller.api;
+package com.chaoweifish.companyweb.controller.adminAPI;
 
 
 
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /*
@@ -38,6 +39,7 @@ public class ManageController {
         return map;
     }
 
+
     @RequestMapping("/saveIndexImg")
     public HashMap<String,Object> saveIndexImg(@RequestBody Map<String,Object> jsonMap) {
         HashMap map =new HashMap<String,Object>();
@@ -47,4 +49,6 @@ public class ManageController {
         map.put("result",result);
         return map;
     }
+
+
 }
