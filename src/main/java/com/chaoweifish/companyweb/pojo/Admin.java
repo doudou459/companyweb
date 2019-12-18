@@ -1,5 +1,7 @@
 package com.chaoweifish.companyweb.pojo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Admin {
 
     private  long ID;
@@ -17,7 +19,7 @@ public class Admin {
     public void setLastLoginTime(long lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
-
+    @JsonProperty("ID")
     public long getID() {
         return ID;
     }

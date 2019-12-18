@@ -1,5 +1,7 @@
 package com.chaoweifish.companyweb.pojo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Carousel_img {
     @Override
     public String toString() {
@@ -15,7 +17,7 @@ public class Carousel_img {
     private String showType;
     private String title;
     private String url;
-
+    @JsonProperty("ID")
     public long getID() {
         return ID;
     }

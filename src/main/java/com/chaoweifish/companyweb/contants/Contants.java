@@ -9,7 +9,7 @@ public class Contants {
     private final String STABLE = "stable";
     private final String EDIT = "edit";
     private final String DELETE = "delete";
-    private final String PICTURE_PATH="C:"+ File.separator+"chaoweifish"+File.separator+"img";
+    private final String PICTURE_PATH=System.getProperty("user.dir")+"/../"+"../storeFiles"+File.separator+"chaoweifish"+File.separator+"img";
 
     public String getNEW() {
         return NEW;
