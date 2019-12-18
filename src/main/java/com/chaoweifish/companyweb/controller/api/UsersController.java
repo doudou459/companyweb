@@ -27,6 +27,7 @@ public class UsersController {
     private Index_imgService index_imgService;
     @Autowired
     private StoreFile storeFile;
+    @Autowired
     private Contants contants;
     @RequestMapping("/getCarouselImgs")
     public List getCarouselImgs(){
