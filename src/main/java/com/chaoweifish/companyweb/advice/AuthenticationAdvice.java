@@ -45,10 +45,10 @@ public class AuthenticationAdvice {
         如对比一致则使用随机函数随机控制修改  admin的loginTime值
         无论是否修改loginTime的值，都将loginTime（新值或旧值）作为newLoginTime传递给目标方法
         */
-        if(String.valueOf(admin.getLoginTime()).equals((String)jsonMap.get("loginTime"))){
+        if(String.valueOf(admin.getLoginTime()).equals(jsonMap.get("loginTime").toString())){
             if(Math.random()*10+1>6){
                 long newLoginTime = System.currentTimeMillis();
-                adminLoginMapper.updateLoginTime((String)jsonMap.get("loginID"),newLoginTime);
+                adminLoginMapper.updateLoginTime(jsonMap.get("loginID").toString(),newLoginTime);
                 jsonMap.put("newLoginTime",newLoginTime);
             }else{
                 jsonMap.put("newLoginTime",jsonMap.get("loginTime"));

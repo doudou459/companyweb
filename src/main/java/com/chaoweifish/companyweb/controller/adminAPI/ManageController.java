@@ -2,6 +2,7 @@ package com.chaoweifish.companyweb.controller.adminAPI;
 
 
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.chaoweifish.companyweb.service.CarouselService;
 import com.chaoweifish.companyweb.service.Index_imgService;
@@ -34,9 +35,13 @@ public class ManageController {
     public HashMap<String,Object> saveCarouselImg(@RequestBody Map<String,Object> jsonMap) {
         HashMap map =new HashMap<String,Object>();
         map.put("loginTime",jsonMap.get("newLoginTime"));
-        JSONArray jsonArray = (JSONArray)jsonMap.get("carouselData");
-        String result = carouselService.saveCarousel(jsonArray);
-        map.put("result",result);
+        JSONArray jsonArray = JSON.parseArray((String) jsonMap.get("carouselData"));
+        if(jsonArray==null||jsonArray.size()==0){
+            map.put("result","success");
+        }else {
+            String result = carouselService.saveCarousel(jsonArray);
+            map.put("result", result);
+        }
         return map;
     }
 
@@ -45,9 +50,13 @@ public class ManageController {
     public HashMap<String,Object> saveIndexImg(@RequestBody Map<String,Object> jsonMap) {
         HashMap map =new HashMap<String,Object>();
         map.put("loginTime",jsonMap.get("newLoginTime"));
-        JSONArray jsonArray = (JSONArray)jsonMap.get("indexImgData");
-        String result = index_imgService.saveIndex_img(jsonArray);
-        map.put("result",result);
+        JSONArray jsonArray =JSON.parseArray((String) jsonMap.get("indexImgData"));
+        if(jsonArray==null||jsonArray.size()==0){
+            map.put("result","success");
+        }else {
+            String result = index_imgService.saveIndex_img(jsonArray);
+            map.put("result", result);
+        }
         return map;
     }
 

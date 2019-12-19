@@ -47,7 +47,7 @@ public class Index_imgServiceImpl implements Index_imgService {
                 this.updateIndex_img(index_img);
                 continue;
             }else if(contants.getDELETE().equals(jsonArray.getJSONObject(i).get("state"))){
-                if(!"none".equals(jsonObject.getString("url"))){
+                if(!("none".equals(jsonObject.getString("url"))||jsonObject.getString("url")==null||jsonObject.getString("url").isEmpty())){
                     String path = contants.getPICTURE_PATH()+ File.separator+jsonObject.getString("url");
                     File file= new File(path);
                     if (file.exists()) {
@@ -56,8 +56,8 @@ public class Index_imgServiceImpl implements Index_imgService {
                 }
                 this.deleteIndex_img(index_img.getID());
             }
-            result ="success";
         }
+        result ="success";
         return result;
     }
 
@@ -110,7 +110,7 @@ public class Index_imgServiceImpl implements Index_imgService {
         Index_img index_img = new Index_img();
         index_img.setID(jsonObject.getLong("ID"));
         index_img.setTitle(jsonObject.getString("title"));
-        if(jsonObject.get("url")==null||"none".equals(jsonObject.getString("url"))){
+        if(jsonObject.get("url")==null||"none".equals(jsonObject.getString("url"))||jsonObject.getString("url").isEmpty()){
             index_img.setUrl("none");
         }else if("data".equals(jsonObject.getString("url").substring(0, 4))){
             int begin =jsonObject.getString("url").indexOf("/")+1;

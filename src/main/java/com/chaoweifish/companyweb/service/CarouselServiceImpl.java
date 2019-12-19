@@ -47,7 +47,7 @@ public class CarouselServiceImpl implements CarouselService {
                 this.updateCarousel(carousel_img);
                 continue;
             }else if(contants.getDELETE().equals(jsonArray.getJSONObject(i).get("state"))){
-               if(!"none".equals(carousel.getString("url"))){
+               if(!("none".equals(carousel.getString("url"))||carousel.getString("url")==null||carousel.getString("url").isEmpty())){
                    String path = contants.getPICTURE_PATH()+File.separator+carousel.getString("url");
                    File file= new File(path);
                    if (file.exists()) {
@@ -56,8 +56,8 @@ public class CarouselServiceImpl implements CarouselService {
                }
                this.deletCarousel(carousel_img.getID());
             }
-            result ="success";
         }
+        result ="success";
         return result;
     }
 
@@ -110,7 +110,7 @@ public class CarouselServiceImpl implements CarouselService {
           carousel_img.setID(carousel.getLong("ID"));
           carousel_img.setShowType(carousel.getString("showType"));
           carousel_img.setTitle(carousel.getString("title"));
-          if(carousel.get("url")==null||"none".equals(carousel.getString("url"))){
+          if(carousel.get("url")==null||"none".equals(carousel.getString("url"))||carousel.getString("url").isEmpty()){
               carousel_img.setUrl("none");
           }else if("data".equals(carousel.getString("url").substring(0, 4))){
               int begin =carousel.getString("url").indexOf("/")+1;
