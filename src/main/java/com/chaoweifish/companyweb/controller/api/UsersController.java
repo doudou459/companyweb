@@ -1,9 +1,8 @@
 package com.chaoweifish.companyweb.controller.api;
 
 import com.chaoweifish.companyweb.contants.Contants;
-import com.chaoweifish.companyweb.service.CarouselService;
-import com.chaoweifish.companyweb.service.Index_imgService;
-import com.chaoweifish.companyweb.service.StoreFile;
+import com.chaoweifish.companyweb.pojo.Contact;
+import com.chaoweifish.companyweb.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +28,15 @@ public class UsersController {
     private StoreFile storeFile;
     @Autowired
     private Contants contants;
+
+    @Autowired
+    private ProducesService producesService;
+
+    @Autowired
+    private MydemoService mydemoService;
+    @Autowired
+    private ContactService contactService;
+
     @RequestMapping("/getCarouselImgs")
     public List getCarouselImgs(){
         List list = carouselService.getCarousel();
@@ -40,6 +48,22 @@ public class UsersController {
     public List getIndexImgs(){
         List list = index_imgService.getIndex_img();
         return list;
+    }
+    @RequestMapping("/getMydemo")
+    public List getMydemo(){
+        List list= mydemoService.getMydemo();
+        return list;
+    }
+    @RequestMapping("/getProduces")
+    public List getProduces(){
+        List list =producesService.getProduces();
+        return list;
+    }
+
+    @RequestMapping("/getContact")
+    public String getContact(){
+        Contact contact = contactService.getContact();
+        return contact.getDetail();
     }
 
     @RequestMapping("/uploadImg")

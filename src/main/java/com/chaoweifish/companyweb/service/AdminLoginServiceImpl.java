@@ -70,6 +70,7 @@ public class AdminLoginServiceImpl implements AdminLoginService {
      * **/
 
     @Override
+    @Transactional
     public String changeKey(String loginID, String oldKey, String newKey) {
         String result = "";
         Admin admin = adminLoginMapper.getAdminByLoginID(loginID);

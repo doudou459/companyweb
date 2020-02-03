@@ -4,9 +4,7 @@ package com.chaoweifish.companyweb.controller.adminAPI;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
-import com.chaoweifish.companyweb.service.CarouselService;
-import com.chaoweifish.companyweb.service.Index_imgService;
-import com.chaoweifish.companyweb.service.StoreFile;
+import com.chaoweifish.companyweb.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,6 +28,14 @@ public class ManageController {
 
     @Autowired
     private Index_imgService index_imgService;
+
+    @Autowired
+    private ProducesService producesService;
+
+    @Autowired
+    private MydemoService mydemoService;
+    @Autowired
+    private ContactService contactService;
 
     @RequestMapping("/saveCarouselImg")
     public HashMap<String,Object> saveCarouselImg(@RequestBody Map<String,Object> jsonMap) {
@@ -57,6 +63,42 @@ public class ManageController {
             String result = index_imgService.saveIndex_img(jsonArray);
             map.put("result", result);
         }
+        return map;
+    }
+    @RequestMapping("/saveMydemo")
+    public HashMap<String,Object>saveMydemo(@RequestBody Map<String,Object>jsonMap){
+        HashMap map =new HashMap<String,Object>();
+        map.put("loginTime",jsonMap.get("newLoginTime"));
+        JSONArray jsonArray = JSON.parseArray((String)jsonMap.get("mydemoData"));
+        if(jsonArray==null||jsonArray.size()==0){
+            map.put("result","success");
+        }else{
+            String result = mydemoService.saveMydemo(jsonArray);
+            map.put("result",result);
+        }
+        return map;
+    }
+    @RequestMapping("/saveProduces")
+    public  HashMap<String,Object>saveProduces(@RequestBody Map<String,Object>jsonMap){
+        HashMap map =new HashMap<String,Object>();
+        map.put("loginTime",jsonMap.get("newLoginTime"));
+        JSONArray jsonArray = JSON.parseArray((String)jsonMap.get("producesData"));
+        if(jsonArray==null||jsonArray.size()==0){
+            map.put("result","success");
+        }else{
+            String result = producesService.saveProduces(jsonArray);
+            map.put("result",result);
+        }
+        return map;
+    }
+
+    @RequestMapping("/setContact")
+    public  HashMap<String,Object>setContact(@RequestBody Map<String,Object>jsonMap){
+        HashMap map =new HashMap<String,Object>();
+        map.put("loginTime",jsonMap.get("newLoginTime"));
+       String detail = (String)jsonMap.get("detail");
+       String result = contactService.setContatct(detail);
+       map.put("result",result);
         return map;
     }
 
