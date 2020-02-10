@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface Index_imgMapper {
 
-@Insert("INSERT INTO index_img (ID,tile,url) VALUE (#{ID},#{title},#{url})")
+@Insert("INSERT INTO index_img (ID,title,url) VALUE (#{ID},#{title},#{url})")
 int addIndex_img(@Param("ID") long ID, @Param("title") String title, @Param("url") String url);
 
 @Select("SELECT * FROM index_img")
