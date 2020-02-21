@@ -81,7 +81,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
-        <finalName>chaoweifishAPI</finalName>
+        <finalName>service</finalName>
     </build>
 
 </project>
